@@ -1,12 +1,44 @@
 package com.github.liyibo1110.coding.interviews.cp5;
 
+/**
+ * 题目39 数组中出现次数超过一半的数字
+ * 给定一个二叉搜索树，直接修改成双向链表结构
+ * 额外特征：无
+ * 额外要求：不能创建新节点，只能修改树中原有的指向
+ * @author liyibo
+ */
 public class MoreThanHalf39 {
 
+	/**
+	 * 切分法：要借助快速排序的partition方法，比较复杂
+	 */
 	public int moreThanHalf(int[] array) {
 		
 		if (array == null || array.length == 0) return 0;
 		int mid = select(array, array.length/2);
 		return check(array, mid);
+	}
+	
+	/**
+	 * 多数投票法：利用了题目给定的，数字超过长度一半的特点
+	 */
+	public int moreThanHalf2(int[] array) {
+		
+		if (array == null || array.length == 0) return 0;
+		int result = array[0];
+		int count = 1;
+		for (int i = 1; i < array.length; i++) {
+			if (array[i] == result) {
+				count++;
+			} else {
+				count--;
+			}
+			if (count == 0) {
+				result = array[i];
+				count = 1;
+			}
+		}
+		return check(array, result);
 	}
 	
 	/**
